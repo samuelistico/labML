@@ -1,38 +1,36 @@
-from dTree import *
+import dTree
 import csv
-import sys
+import random
+from collections import Counter
 
-'''headers = ['crust','shape','filling', 'class']
-data = [['crust big','shape circle','filling small','+'],
-		['crust small','shape circle','filling small','+'],
-		['crust big','shape square','filling small','-'],
-		['crust big','shape triangle','filling small','-'],
-		['crust big','shape square','filling big','+'],
-		['crust small','shape square','filling small','-'],
-		['crust small','shape square','filling big','+'],
-		['crust big','shape circle','filling big','+']
-		]
+data_sets = ['data_low.csv','data_mid.csv','data_high.csv','data_test.csv']
+data_index = 3
+split = 0.8
 
-# {'shape': {'shape square': {'filling': {'filling big': '+', 'filling small': '-'}}, 
-# 'shape triangle': '-', 
-# 'shape circle': '+'}}
-'''
-with open('data.csv', 'r') as f:
+data_set = data_sets[data_index]
+clean_data_set = "clean_data.csv"
+
+def most_probable(d):
+    data = Counter(d)
+    return data.most_common(1)[0][0]
+
+lines = open(data_set).readlines()
+headers = lines.pop(0)
+random.shuffle(lines)
+lines.insert(0,headers)
+open(clean_data_set, 'w').writelines(lines)
+
+with open(clean_data_set, 'r') as f:
   reader = csv.reader(f)
-  data = list(reader)
+  all_data = list(reader)
+  headers = all_data.pop(0)
+  lim = int(len(all_data) * split)
+  data = all_data[:lim]
+  test_data = all_data[lim:]
 
-with open('test.csv', 'r') as f:
-  reader = csv.reader(f)
-  test_data = list(reader)
-
-headers = ['L-CORE',
-			'L-SURF',
-			'L-O2',
-			'L-BP',
-			'SURF-STBL',
-			'CORE-STBL',
-			'BP-STBL',
-			'COMFORT']
+pos_class = dTree.column(data, len(data[0]) - 1)
+classes = list(set(pos_class))
+guess = most_probable(pos_class)
 
 def predict(tree, entry):
 	res = tree.copy()
@@ -44,8 +42,8 @@ def predict(tree, entry):
 			if val in res[x].keys():
 				res = res[x][val]
 			else:
-				return 'A'
-			if res in ['S','A', 'I']:
+				return guess
+			if res in classes:
 				return res
 	return res
 
@@ -55,21 +53,14 @@ def test(tree):
 	for ex in test_data:
 		ans = predict(tree, ex)
 		expected = ex[-1]
-		print("for :" + str(ex))
-		print("got: " + ans + " expected: " + expected + " " + str(ans == expected) + "\n")
 		if ans == expected:
 			count += 1
 
-	print("Total accuracy " + str(count/l))
+	print("\nTotal accuracy " + str(count/l) + "\n")
 
 def main():
 	header_values = headers.copy()
-	tree = makeTree(data, header_values)
-
-	print('final tree')
-	print(tree)
-	print("\n")
-
+	tree = dTree.makeTree(data, header_values, classes)
 	test(tree)
 
 if __name__ == "__main__":

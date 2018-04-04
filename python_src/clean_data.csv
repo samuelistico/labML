@@ -1,0 +1,9 @@
+crust,shape,filling,class
+small,square,small,neg
+big,square,big,pos
+big,square,small,neg
+small,circle,small,pos
+big,circle,small,pos
+big,triangle,small,neg
+small,square,big,pos
+big,circle,big,pos

@@ -8,9 +8,9 @@ import timeit
 
 #number of runs of our program
 #keep it small 1-2 for data_index2
-runs = 1
+runs = 5
 #0-small 1-medium 2-large
-data_index = 2
+data_index = 1
 #training testing ratio
 split = 0.66
 

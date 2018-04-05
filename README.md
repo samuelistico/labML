@@ -2,7 +2,7 @@
 
 ## DECISION TREE
 
-Current working version is in python_src, to run it you just need python > 3 and run python main.py this will train a new tree using the data in data.csv and then validate and print the accuracy using training_data.py
+Current working version is in decision_tree_src, to run it you just need python > 3 and run python main.py this will train a new tree using the data in data.csv and then validate and print the accuracy using training_data.py
 
 it works by getting the attribute with the best info gain using the entropy formula and then recursively calculating sub trees for each case of that best attribute. The tree is therefore built bottom up as a python dictionary (key,value data structure)
 

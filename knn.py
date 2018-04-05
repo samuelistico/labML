@@ -4,7 +4,7 @@ import random
 import math
 acc = 0#initializes the accuarcy global
 num = 10
-dSet = 2#determine the dataset to be used
+dSet = 0#determine the dataset to be used
 dataBases = ["post-operative.data","cmc.data","covtype.data"]
 nn = [1,3,5,7,9,30,45,60]#K used
 kTimes = [0,0,0,0,0,0,0,0]#it will hold the number of times used the k
@@ -122,14 +122,14 @@ def main(k):
     return accuracy
 pdb.set_trace()
 AvgAcc = 0.0
-for num in range(1):#we repeat this process n number of times
+for num in range(100):#we repeat this process n number of times
     acc = 0
     bestAcc = 0
     bestk = 0
     for x in range(len(nn)):#we use this for to obtain the best K value of an instance
         #    k = int(math.sqrt(len(trainingSet))/2)
         k = nn[x]
-        accTemp=main(45)
+        accTemp=main(k)
         acc+= accTemp
         if(accTemp > bestAcc):
             bestAcc = accTemp
@@ -141,7 +141,7 @@ for num in range(1):#we repeat this process n number of times
     print('Accuracy Avg: ' + repr(acc/len(nn)) + '%')
     print('Best Accuarcy with k='+repr(bestk)+': ' + repr(bestAcc) + '%')
 
-print("AVG Accuarcy after 100:" +repr(AvgAcc/1))
+print("AVG Accuarcy after 100:" +repr(AvgAcc/100))
 allBestK = 0
 allBestKi = 0
 for ki in range(len(nn)):# we use this for to print the overall K value

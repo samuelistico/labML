@@ -10,13 +10,10 @@ For the predictions we travers these dictionary using the proposed best path unt
 
 the data sets have to be used as they are saved in the folder
 
-main.py contains driver and validation code 
-
-dTree.py contains the creation of the tree
-
-data_manager.py contains code to manage, clean, provide data
-
-dTreeUtils.py contains extra functions used
+* main.py contains driver and validation code 
+* dTree.py contains the creation of the tree
+* data_manager.py contains code to manage, clean and provide data
+* dTreeUtils.py contains extra functions used
 
 Example of generated tree in python
 ```javascript
